@@ -1,5 +1,5 @@
-import funcs
-import matplotlib.pyplot as plt
+import tensorflow as tf
+print(tf.config.list_physical_devices('GPU'))
 
-plt.figure(figsize=(20, 3))
-plt.plot(range(-5, 6), funcs.mex_func(2, -5, 6, 3, 0))
+
+

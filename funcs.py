@@ -81,7 +81,7 @@ def mex_func(coef, start, end, a, x):
 def easy_cwt(data, scales, wavelet):
     final = []
     for i in data:
-        final.append(pywt.cwt(i, scales, wavelet)[0].flatten())
+        final.append(pywt.cwt(i, scales, wavelet)[0])
 
     return np.array(final)
 
