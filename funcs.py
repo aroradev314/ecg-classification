@@ -103,3 +103,11 @@ def evaluate_model(model_pred, model_true):
     print(metrics.classification_report(model_true, model_pred))
 
 
+def one_hot_encoder(labels, classes):
+    converted = [[0 for i in range(classes)] for j in labels]
+    for i in range(len(labels)):
+        converted[i][labels[i]] = 1
+
+    return np.array(converted)
+
+
