@@ -103,6 +103,17 @@ def evaluate_model(model_pred, model_true):
     print(metrics.classification_report(model_true, model_pred))
 
 
+def graph_losses(history, fig_size):
+    history = history.history
+    plt.figure(figsize=fig_size)
+    plt.plot(history['loss'])
+    plt.plot(history['val_loss'])
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.legend(['Train', 'Validation'], loc='upper left')
+    plt.show()
+
+
 def one_hot_encoder(labels, classes):
     converted = [[0 for i in range(classes)] for j in labels]
     for i in range(len(labels)):
