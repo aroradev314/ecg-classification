@@ -47,7 +47,8 @@ def plot(record, title, size):
 
 def basic_model(activation, shape):
     inputs = Input(shape=shape)
-    hidden1 = Dense(round(shape / 2), activation=tf.nn.relu)(inputs)  # amount of neurons in hidden layer is mean between
+    hidden1 = Dense(round(shape / 2), activation=tf.nn.relu)(
+        inputs)  # amount of neurons in hidden layer is mean between
     # first and last layer
     hidden2 = Dense(round(shape / 2), activation=tf.nn.relu)(hidden1)
     outputs = Dense(1, activation=activation)(hidden2)
@@ -103,13 +104,24 @@ def evaluate_model(model_pred, model_true):
     print(metrics.classification_report(model_true, model_pred))
 
 
-def graph_losses(history, fig_size):
+def make_for_cnn(data, scales, wavelet):
+    transform = []
+    for i in data:
+        transform.append(pywt.cwt(i, scales, wavelet)[0].T)
+    return np.array(transform)
+
+
+def graph_losses(history, metric, fig_size=(20, 3)):
     history = history.history
     plt.figure(figsize=fig_size)
-    plt.plot(history['loss'])
-    plt.plot(history['val_loss'])
+    if metric == "Loss":
+        plt.plot(history['loss'])
+        plt.plot(history['val_loss'])
+    else:
+        plt.plot(history['accuracy'])
+        plt.plot(history['val_accuracy'])
     plt.xlabel('Epoch')
-    plt.ylabel('Loss')
+    plt.ylabel(metric)
     plt.legend(['Train', 'Validation'], loc='upper left')
     plt.show()
 
@@ -120,5 +132,3 @@ def one_hot_encoder(labels, classes):
         converted[i][labels[i]] = 1
 
     return np.array(converted)
-
-
